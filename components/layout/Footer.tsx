@@ -1,102 +1,87 @@
 import Link from "next/link";
-import { Play, Users, Globe, Mail, Phone, MapPin } from "lucide-react";
+import Image from "next/image";
+import { Play, Users, Globe, Mail, Phone, MapPin, ArrowRight } from "lucide-react";
+import { footerData, type FooterSocialIcon } from "@/data/footer";
 
-const footerLinks = {
-  company: [
-    { label: "About Us", href: "/about" },
-    { label: "Services", href: "/services" },
-    { label: "Blog", href: "/blog" },
-    { label: "Contact Us", href: "/contact" },
-  ],
-  helpCenter: [
-    { label: "Support", href: "/support" },
-    { label: "FAQ", href: "/support#faq" },
-    { label: "Terms of Service", href: "/terms" },
-    { label: "Privacy Policy", href: "/privacy" },
-  ],
-  services: [
-    { label: "Pay Per Call Leads", href: "/services" },
-    { label: "CPL Leads", href: "/services" },
-    { label: "CPA Leads", href: "/services" },
-    { label: "Custom Solutions", href: "/services" },
-  ],
+const socialIconMap: Record<FooterSocialIcon, typeof Play> = {
+  youtube: Play,
+  linkedin: Users,
+  facebook: Globe,
 };
-
-const socials = [
-  {
-    Icon: Play,
-    href: "https://www.youtube.com/channel/UCbwVFYV_NxkG8bV7k7aJu-w",
-    label: "YouTube",
-  },
-  {
-    Icon: Users,
-    href: "https://www.linkedin.com/company/nationwideleadsthatconvert",
-    label: "LinkedIn",
-  },
-  {
-    Icon: Globe,
-    href: "https://www.facebook.com/LeadNationwide",
-    label: "Facebook",
-  },
-];
 
 export function Footer() {
   return (
-    <footer className="bg-blue-primary text-white">
-      {/* Top accent gradient line */}
-      <div className="h-px bg-linear-to-r from-transparent via-red-primary to-transparent" />
+    <footer className="relative overflow-hidden border-t border-black/10 bg-white text-black">
+      <div className="absolute inset-0 bg-[radial-gradient(circle_at_top_right,rgba(193,18,31,0.08),transparent_45%)]" />
+      <div className="absolute inset-x-0 top-0 h-px bg-linear-to-r from-transparent via-red-primary to-transparent" />
 
-      <div className="max-w-7xl mx-auto px-6 lg:px-8 py-16">
-        {/* ── 4-column grid ───────────────────────────────── */}
-        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-10 lg:gap-12">
-          {/* Col 1 — Brand */}
+      <div className="relative mx-auto max-w-7xl px-6 py-16 lg:px-8 lg:py-20">
+        <div className="mb-12 grid gap-6 rounded-2xl border border-black/10 bg-black/[0.02] p-6 md:grid-cols-2 md:items-center">
+          <div>
+            <p className="text-xs font-semibold uppercase tracking-[0.14em] text-red-primary">
+              {footerData.ctaEyebrow}
+            </p>
+            <h2 className="mt-3 max-w-xl text-2xl font-semibold tracking-tight text-black sm:text-3xl">
+              {footerData.ctaTitle}
+            </h2>
+          </div>
+          <div className="md:justify-self-end">
+            <Link
+              href={footerData.ctaButton.href}
+              className="inline-flex min-h-11 items-center gap-2 rounded-full bg-red-primary px-6 py-2 text-sm font-semibold text-white transition-all duration-200 hover:-translate-y-0.5 hover:bg-red-hover hover:shadow-[0_10px_24px_rgba(193,18,31,0.3)] focus-visible:ring-2 focus-visible:ring-red-primary focus-visible:ring-offset-2 focus-visible:ring-offset-white focus-visible:outline-hidden"
+            >
+              {footerData.ctaButton.label}
+              <ArrowRight size={14} />
+            </Link>
+          </div>
+        </div>
+
+        <div className="grid grid-cols-1 gap-10 sm:grid-cols-2 lg:grid-cols-4 lg:gap-12">
           <div className="sm:col-span-2 lg:col-span-1">
-            {/* Logo */}
-            <div className="flex items-center gap-2.5 mb-4">
-              <div className="flex h-8 w-8 items-center justify-center rounded-lg bg-red-primary">
-                <span className="text-white font-extrabold text-sm select-none">
-                  LN
-                </span>
-              </div>
-              <span className="font-bold text-lg">
-                Lead <span className="text-blue-light">Nationwide</span>
+            <div className="mb-4 flex items-center gap-2.5">
+              <Image
+                src={footerData.brand.logoSrc}
+                alt={footerData.brand.logoAlt}
+                width={150}
+                height={38}
+                className="h-10 w-auto"
+                style={{ width: "auto" }}
+              />
+              <span className="text-lg font-bold text-black">
+                {footerData.brand.logoPrimary} <span className="text-red-primary">{footerData.brand.logoAccent}</span>
               </span>
             </div>
-            <p className="text-white/45 text-sm leading-relaxed mb-6 max-w-xs">
-              Delivering top-quality Pay Per Call, CPL, and CPA leads across
-              diverse industries worldwide. Connecting businesses with their
-              ideal clients.
+
+            <p className="mb-6 max-w-xs text-sm leading-relaxed text-black/70">
+              {footerData.brand.description}
             </p>
-            {/* Social icons */}
+
             <div className="flex gap-2.5">
-              {socials.map(({ Icon, href, label }) => (
+              {footerData.socialLinks.map((social) => {
+                const Icon = socialIconMap[social.icon];
+
+                return (
                 <a
-                  key={label}
-                  href={href}
+                  key={social.label}
+                  href={social.href}
                   target="_blank"
                   rel="noopener noreferrer"
-                  aria-label={label}
-                  className="group flex h-9 w-9 items-center justify-center rounded-lg bg-blue-accent/30 transition-colors duration-200 hover:bg-blue-accent"
+                  aria-label={social.ariaLabel}
+                  className="group flex h-10 w-10 items-center justify-center rounded-lg border border-black/10 bg-black/[0.02] transition-colors duration-200 hover:border-red-primary/40 hover:bg-red-primary/5"
                 >
                   <Icon
                     size={15}
-                    className="text-white/50 group-hover:text-white transition-colors"
+                    className="text-black/65 transition-colors group-hover:text-red-primary"
                   />
                 </a>
-              ))}
+                );
+              })}
             </div>
           </div>
 
-          {/* Cols 2-4 — Link columns */}
-          {(
-            [
-              { title: "Company", links: footerLinks.company },
-              { title: "Help Center", links: footerLinks.helpCenter },
-              { title: "Our Services", links: footerLinks.services },
-            ] as const
-          ).map((col) => (
+          {footerData.columns.map((col) => (
             <div key={col.title}>
-              <h3 className="text-white text-sm font-semibold uppercase tracking-widest mb-5">
+              <h3 className="mb-5 text-sm font-semibold tracking-[0.08em] text-black uppercase">
                 {col.title}
               </h3>
               <ul className="space-y-3">
@@ -104,7 +89,7 @@ export function Footer() {
                   <li key={link.label}>
                     <Link
                       href={link.href}
-                      className="text-sm text-white/45 transition-colors duration-200 hover:text-blue-light"
+                      className="text-sm text-black/70 transition-colors duration-200 hover:text-red-primary"
                     >
                       {link.label}
                     </Link>
@@ -115,47 +100,41 @@ export function Footer() {
           ))}
         </div>
 
-        {/* ── Contact info row ─────────────────────────────── */}
-        <div className="mt-12 flex flex-wrap gap-x-8 gap-y-3 border-t border-border-light/20 pt-8">
+        <div className="mt-12 flex flex-wrap gap-x-8 gap-y-3 border-t border-black/12 pt-8">
           <a
-            href="mailto:inquiry@leadnationwide.com"
-            className="flex items-center gap-2 text-white/35 hover:text-white/70 text-sm transition-colors group"
+            href={`mailto:${footerData.contact.email}`}
+            className="group flex items-center gap-2 text-sm text-black/70 transition-colors hover:text-red-primary"
           >
-            <Mail size={13} className="transition-colors group-hover:text-blue-light" />
-            inquiry@leadnationwide.com
+            <Mail size={13} className="transition-colors group-hover:text-red-primary" />
+            {footerData.contact.email}
           </a>
           <a
-            href="tel:305-417-7034"
-            className="flex items-center gap-2 text-white/35 hover:text-white/70 text-sm transition-colors group"
+            href={`tel:${footerData.contact.phone}`}
+            className="group flex items-center gap-2 text-sm text-black/70 transition-colors hover:text-red-primary"
           >
-            <Phone size={13} className="transition-colors group-hover:text-blue-light" />
-            305-417-7034
+            <Phone size={13} className="transition-colors group-hover:text-red-primary" />
+            {footerData.contact.phone}
           </a>
-          <span className="flex items-center gap-2 text-white/35 text-sm">
+          <span className="flex items-center gap-2 text-sm text-black/70">
             <MapPin size={13} />
-            1207 Delaware Ave, Wilmington, DE 19806
+            {footerData.contact.address}
           </span>
         </div>
 
-        {/* ── Bottom copyright bar ─────────────────────────── */}
-        <div className="mt-6 flex flex-col items-center justify-between gap-4 border-t border-border-light/15 pt-6 sm:flex-row">
-          <p className="text-white/25 text-sm">
-            © {new Date().getFullYear()} Lead Nationwide LLC. All rights
-            reserved.
+        <div className="mt-6 flex flex-col items-center justify-between gap-4 border-t border-black/10 pt-6 sm:flex-row">
+          <p className="text-sm text-black/60">
+            © {new Date().getFullYear()} {footerData.legal.companyName}. {footerData.legal.copyrightSuffix}
           </p>
           <div className="flex gap-6">
-            <Link
-              href="/terms"
-              className="text-white/25 hover:text-white/55 text-sm transition-colors"
-            >
-              Terms
-            </Link>
-            <Link
-              href="/privacy"
-              className="text-white/25 hover:text-white/55 text-sm transition-colors"
-            >
-              Privacy
-            </Link>
+            {footerData.legal.links.map((link) => (
+              <Link
+                key={link.href}
+                href={link.href}
+                className="text-sm text-black/60 transition-colors hover:text-red-primary"
+              >
+                {link.label}
+              </Link>
+            ))}
           </div>
         </div>
       </div>

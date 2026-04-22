@@ -2,6 +2,7 @@
 
 import { motion } from "framer-motion";
 import Link from "next/link";
+import Image from "next/image";
 import { ArrowRight, TrendingUp, DollarSign, PhoneCall } from "lucide-react";
 import { fadeUp, heroStagger } from "@/lib/motion";
 
@@ -15,10 +16,20 @@ export function HeroSection() {
   return (
     <section
       id="hero"
-      className="relative flex min-h-screen items-center overflow-hidden bg-bg-primary"
+      className="relative flex min-h-screen items-center overflow-hidden"
     >
       {/* ── Atmospheric background glows ──────────────────── */}
       <div className="absolute inset-0 pointer-events-none">
+        <Image
+          src="/images/background.webp"
+          alt=""
+          fill
+          priority
+          sizes="100vw"
+          className="object-cover"
+        />
+        <div className="absolute inset-0 bg-bg-primary/60" />
+
         {/* Deep maroon glow — bottom left */}
         <div className="absolute -bottom-40 -left-40 h-[700px] w-[700px] rounded-full bg-red-light blur-[140px]" />
         {/* Blue glow — top right */}
