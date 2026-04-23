@@ -26,7 +26,7 @@ export const navbarData: NavbarData = {
   logoPrimary: "Lead",
   logoAccent: "Nationwide",
   navLinks: [
-
+    { label: "Home", href: "/" },
     { label: "About", href: "/about" },
     { label: "Services", href: "/services" },
     { label: "Blog", href: "/blog" },

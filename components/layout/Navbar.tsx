@@ -20,7 +20,9 @@ export function Navbar() {
   }, []);
 
   useEffect(() => {
-    const onResize = () => { if (window.innerWidth >= 768) setMobileOpen(false); };
+    const onResize = () => {
+      if (window.innerWidth >= 768) setMobileOpen(false);
+    };
     window.addEventListener("resize", onResize);
     return () => window.removeEventListener("resize", onResize);
   }, []);
@@ -30,7 +32,6 @@ export function Navbar() {
       document.body.style.overflow = "";
       return;
     }
-
     document.body.style.overflow = "hidden";
     return () => {
       document.body.style.overflow = "";
@@ -39,48 +40,61 @@ export function Navbar() {
 
   return (
     <>
-      {/* Main header bar */}
+      {/* ── Single fixed header ── */}
       <motion.header
         initial={{ y: -80, opacity: 0 }}
         animate={{ y: 0, opacity: 1 }}
-        transition={{ duration: 0.35, ease: "easeOut" }}
-        className={`fixed left-0 right-0 top-0 z-50 transition-all duration-700 ${
-          scrolled
-            ? "bg-transparent"
-            : "bg-transparent"
-        }`}
+        transition={{ duration: 0.5, ease: "easeOut" }}
+        className="fixed left-0 right-0 top-0 z-50"
       >
         <div className="max-w-[1600px] mx-auto px-6 lg:px-8">
-          <div className="flex h-16 items-center justify-between">
-            {/* Logo */}
-            <Link
-              href={navbarData.homeHref}
-              className="group flex items-center gap-3 rounded-md focus-visible:ring-2 focus-visible:ring-red-primary focus-visible:ring-offset-2 focus-visible:ring-offset-bg-primary focus-visible:outline-hidden"
-            >
-              <Image
-                src={navbarData.logoSrc}
-                alt={navbarData.logoAlt}
-                width={140}
-                height={36}
-                className="h-9 w-auto"
-                style={{ width: "auto" }}
-                priority
-              />
-              <span className="text-lg font-bold tracking-tight text-text-primary">
-                {navbarData.logoPrimary} <span className="text-red-primary">{navbarData.logoAccent}</span>
-              </span>
-            </Link>
+          <div className="relative flex h-20 items-center justify-between">
 
-            {/* Desktop Nav links */}
-            <nav className="hidden md:flex items-center gap-1 rounded-full border border-border-light bg-white p-1.5">
+            {/* Left — Logo (fades out on scroll) */}
+            <div
+              className={`transition-all duration-500 ease-in-out ${
+                scrolled
+                  ? "opacity-0 pointer-events-none -translate-x-4"
+                  : "opacity-100 translate-x-0"
+              }`}
+            >
+              <Link
+                href={navbarData.homeHref}
+                className="flex items-center gap-3 rounded-md focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-red-primary"
+                tabIndex={scrolled ? -1 : 0}
+              >
+                <Image
+                  src={navbarData.logoSrc}
+                  alt={navbarData.logoAlt}
+                  width={140}
+                  height={36}
+                  className="h-9 w-auto"
+                  style={{ width: "auto" }}
+                  priority
+                />
+                <span className="text-lg font-bold tracking-tight text-text-primary">
+                  {navbarData.logoPrimary}{" "}
+                  <span className="text-red-primary">{navbarData.logoAccent}</span>
+                </span>
+              </Link>
+            </div>
+
+            {/* Center — Nav pill (always present, scales up on scroll) */}
+            <nav
+              className={`absolute left-1/2 -translate-x-1/2 hidden md:flex items-center gap-1 rounded-full border transition-all duration-500 ease-in-out ${
+                scrolled
+                  ? "border-red-primary bg-white shadow-xl shadow-black/10 backdrop-blur-lg px-3 py-2 scale-110"
+                  : "border-red-primary bg-white/90 backdrop-blur-md px-2 py-1.5 scale-100 shadow-sm"
+              }`}
+            >
               {navbarData.navLinks.map((link) => (
                 <Link
                   key={link.href}
                   href={link.href}
-                  className={`rounded-full px-4 py-2 text-sm font-medium transition-colors focus-visible:ring-2 focus-visible:ring-red-primary focus-visible:ring-offset-2 focus-visible:ring-offset-bg-primary focus-visible:outline-hidden ${
+                  className={`rounded-full px-4 py-2 text-sm font-medium transition-all duration-200 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-red-primary ${
                     pathname === link.href
-                      ? "bg-red-hover text-white"
-                      : "text-text-primary hover:bg-red-hover/30 hover:text-text-primary"
+                      ? "bg-red-primary text-white shadow-sm"
+                      : "text-text-primary hover:bg-red-primary/20 hover:text-red-primary"
                   }`}
                 >
                   {link.label}
@@ -88,32 +102,43 @@ export function Navbar() {
               ))}
             </nav>
 
-            {/* CTA + hamburger */}
-            <div className="flex items-center gap-4">
-              <Link
-                href={navbarData.cta.href}
-                className="hidden min-h-11 md:inline-flex items-center gap-2 rounded-full bg-red-primary px-5 py-2 text-sm font-semibold text-white transition-all duration-200 hover:-translate-y-0.5 hover:bg-red-hover active:bg-red-hover focus-visible:ring-2 focus-visible:ring-red-primary focus-visible:ring-offset-2 focus-visible:ring-offset-bg-primary focus-visible:outline-hidden"
+            {/* Right — CTA + mobile toggle */}
+            <div className="flex items-center gap-3">
+              {/* CTA (fades out on scroll) */}
+              <div
+                className={`transition-all duration-500 ease-in-out ${
+                  scrolled
+                    ? "opacity-0 pointer-events-none translate-x-4"
+                    : "opacity-100 translate-x-0"
+                }`}
               >
-                <PhoneCall size={14} />
-                {navbarData.cta.label}
-              </Link>
+                <Link
+                  href={navbarData.cta.href}
+                  tabIndex={scrolled ? -1 : 0}
+                  className="hidden md:inline-flex items-center gap-2 rounded-full bg-red-primary px-5 py-2.5 text-sm font-semibold text-white shadow-md transition-all duration-200 hover:-translate-y-0.5 hover:bg-red-hover hover:shadow-lg focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-red-primary"
+                >
+                  <PhoneCall size={14} />
+                  {navbarData.cta.label}
+                </Link>
+              </div>
 
-              {/* Mobile hamburger */}
+              {/* Mobile hamburger — always visible */}
               <button
                 id="mobile-menu-toggle"
                 onClick={() => setMobileOpen((v) => !v)}
-                className="min-h-11 min-w-11 rounded-md p-1 text-text-secondary transition-colors hover:text-red-primary focus-visible:ring-2 focus-visible:ring-red-primary focus-visible:ring-offset-2 focus-visible:ring-offset-bg-primary focus-visible:outline-hidden md:hidden"
+                className="min-h-11 min-w-11 rounded-md p-1 text-text-secondary transition-colors hover:text-red-primary focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-red-primary md:hidden"
                 aria-label={navbarData.mobileToggleAriaLabel}
                 aria-expanded={mobileOpen}
               >
                 {mobileOpen ? <X size={24} /> : <Menu size={24} />}
               </button>
             </div>
+
           </div>
         </div>
       </motion.header>
 
-      {/* Mobile drawer */}
+      {/* ── Mobile drawer ── */}
       <AnimatePresence>
         {mobileOpen && (
           <>
@@ -123,7 +148,7 @@ export function Navbar() {
               animate={{ opacity: 1 }}
               exit={{ opacity: 0 }}
               transition={{ duration: 0.2 }}
-              className="fixed inset-0 top-16 z-40 bg-blue-primary/20 md:hidden"
+              className="fixed inset-0 top-20 z-40 bg-black/20 backdrop-blur-sm md:hidden"
               onClick={() => setMobileOpen(false)}
             />
 
@@ -133,7 +158,7 @@ export function Navbar() {
               animate={{ opacity: 1, y: 0 }}
               exit={{ opacity: 0, y: -8 }}
               transition={{ duration: 0.22, ease: "easeOut" }}
-              className="fixed left-0 right-0 top-16 z-40 border-b border-border-light bg-bg-primary backdrop-blur-xl md:hidden"
+              className="fixed left-0 right-0 top-20 z-40 border-b border-border-light bg-white md:hidden"
             >
               <div className="flex flex-col gap-1 px-6 pb-6 pt-3">
                 {navbarData.navLinks.map((link, i) => (
@@ -148,8 +173,8 @@ export function Navbar() {
                       onClick={() => setMobileOpen(false)}
                       className={`block rounded-lg border px-4 py-3.5 text-base font-medium transition-colors ${
                         pathname === link.href
-                          ? "border-red-hover bg-red-hover text-white"
-                          : "border-transparent text-text-secondary hover:border-red-light/80 hover:bg-red-light/60 hover:text-red-primary"
+                          ? "border-red-primary bg-red-primary text-white"
+                          : "border-transparent text-text-secondary hover:border-red-primary/30 hover:bg-red-primary/5 hover:text-red-primary"
                       }`}
                     >
                       {link.label}
