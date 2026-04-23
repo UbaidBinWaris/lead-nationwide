@@ -10,7 +10,7 @@ export function CmsPageView({ page }: Readonly<CmsPageViewProps>) {
   const isHomePage = page.slug === "home";
 
   return (
-    <main className="flex-1 bg-linear-to-b from-bg-primary via-blue-light/40 to-bg-secondary text-text-primary">
+    <main className="flex-1 text-text-primary">
       <section
         className={`relative overflow-hidden ${
           isHomePage ? "lg:min-h-screen" : ""
@@ -18,15 +18,19 @@ export function CmsPageView({ page }: Readonly<CmsPageViewProps>) {
       >
         {isHomePage ? (
           <div className="pointer-events-none absolute inset-0 -z-10">
-            <Image
-              src="/images/background.webp"
-              alt=""
-              fill
-              priority
-              sizes="100vw"
-              className="object-cover"
-            />
-            <div className="absolute inset-0 bg-bg-primary/35" />
+            <video
+              className="absolute inset-0 h-full w-full object-cover"
+              autoPlay
+              muted
+              loop
+              playsInline
+              preload="none"
+              poster="/images/background.webp"
+            >
+              <source src="/background.webm" type="video/webm" />
+              <source src="/background-optimized.mp4" type="video/mp4" />
+            </video>
+            <div className="absolute inset-0 bg-bg-primary/20" />
             <div className="absolute inset-0 bg-linear-to-b from-transparent via-transparent to-bg-primary/30" />
           </div>
         ) : null}
