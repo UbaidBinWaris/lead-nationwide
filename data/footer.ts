@@ -40,7 +40,7 @@ export const footerData: FooterData = {
   ctaEyebrow: "Let's Build Your Pipeline",
   ctaTitle: "Ready for predictable, high-intent leads?",
   ctaButton: {
-    label: "Book A Strategy Call",
+    label: "Contact now",
     href: "/contact",
   },
   brand: {

@@ -1,12 +1,20 @@
 import Link from "next/link";
 import Image from "next/image";
-import { Play, Users, Globe, Mail, Phone, MapPin, ArrowRight } from "lucide-react";
+import { FaYoutube, FaLinkedinIn, FaFacebookF } from "react-icons/fa";
+import { MdEmail, MdPhone, MdLocationOn, MdArrowForward } from "react-icons/md";
+import type { IconType } from "react-icons";
 import { footerData, type FooterSocialIcon } from "@/data/footer";
 
-const socialIconMap: Record<FooterSocialIcon, typeof Play> = {
-  youtube: Play,
-  linkedin: Users,
-  facebook: Globe,
+const socialIconMap: Record<FooterSocialIcon, IconType> = {
+  youtube: FaYoutube,
+  linkedin: FaLinkedinIn,
+  facebook: FaFacebookF,
+};
+
+const socialHoverMap: Record<FooterSocialIcon, string> = {
+  youtube: "hover:bg-[#FF0000] hover:border-[#FF0000]",
+  linkedin: "hover:bg-[#0A66C2] hover:border-[#0A66C2]",
+  facebook: "hover:bg-[#1877F2] hover:border-[#1877F2]",
 };
 
 export function Footer() {
@@ -27,27 +35,29 @@ export function Footer() {
 
   return (
     <>
-      <div className="mb-12 grid gap-6 rounded-2xl border border-border-light bg-white p-6 md:grid-cols-[1fr_auto] md:items-center md:p-8">
-        <div>
-          <p className="text-xs font-semibold uppercase tracking-[0.14em] text-red-primary">
-            {footerData.ctaEyebrow}
-          </p>
-          <h2 className="mt-3 max-w-2xl text-2xl font-semibold tracking-tight text-text-primary sm:text-3xl">
-            {footerData.ctaTitle}
-          </h2>
-        </div>
-        <div className="md:justify-self-end">
-          <Link
-            href={footerData.ctaButton.href}
-            className="inline-flex min-h-11 items-center gap-2 rounded-full bg-red-primary px-6 py-2 text-sm font-semibold text-white transition-colors duration-200 hover:bg-red-hover focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-red-primary focus-visible:ring-offset-2 focus-visible:ring-offset-bg-secondary"
-          >
-            {footerData.ctaButton.label}
-            <ArrowRight size={14} />
-          </Link>
+      <div className="mx-auto w-7xl rounded-4xl mb-10 bg-red-primary px-8 py-10 md:px-12 md:py-12">
+        <div className="flex flex-col gap-6 md:flex-row md:items-center md:justify-between">
+          <div className="max-w-2xl">
+            <p className="text-xs font-semibold uppercase tracking-[0.14em] text-white/60">
+              {footerData.ctaEyebrow}
+            </p>
+            <h2 className="mt-3 text-2xl font-semibold tracking-tight text-white sm:text-3xl">
+              {footerData.ctaTitle}
+            </h2>
+          </div>
+          <div className="shrink-0">
+            <Link
+              href={footerData.ctaButton.href}
+              className="inline-flex min-h-11 items-center gap-2 rounded-full bg-white px-7 py-2.5 text-sm font-semibold text-red-primary transition-all duration-200 hover:bg-white/90 hover:shadow-lg focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-white focus-visible:ring-offset-2 focus-visible:ring-offset-red-primary"
+            >
+              {footerData.ctaButton.label}
+              <MdArrowForward size={16} />
+            </Link>
+          </div>
         </div>
       </div>
 
-      <footer className="relative overflow-hidden border-t border-border-light bg-navy-deep text-white">
+      <footer className="relative overflow-hidden bg-navy-deep text-white">
         <script
           type="application/ld+json"
           dangerouslySetInnerHTML={{ __html: JSON.stringify(organizationSchema) }}
@@ -88,11 +98,11 @@ export function Footer() {
                       target="_blank"
                       rel="noopener noreferrer"
                       aria-label={social.ariaLabel}
-                      className="group flex h-10 w-10 items-center justify-center rounded-full border border-white/20 bg-white/10 transition-colors duration-200 hover:border-red-primary/50 hover:bg-red-primary/15 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-red-primary focus-visible:ring-offset-2 focus-visible:ring-offset-navy-deep"
+                      className={`group flex h-10 w-10 items-center justify-center rounded-full border border-white/20 bg-white/10 transition-all duration-200 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-white/50 focus-visible:ring-offset-2 focus-visible:ring-offset-navy-deep ${socialHoverMap[social.icon]}`}
                     >
                       <Icon
-                        size={15}
-                        className="text-white/70 transition-colors group-hover:text-red-primary"
+                        size={16}
+                        className="text-white/80 transition-colors duration-200 group-hover:text-white"
                       />
                     </a>
                   );
@@ -128,18 +138,18 @@ export function Footer() {
                   href={`mailto:${footerData.contact.email}`}
                   className="group flex items-center gap-2 text-sm text-white/70 transition-colors hover:text-white"
                 >
-                  <Mail size={13} className="transition-colors group-hover:text-white" />
+                  <MdEmail size={16} className="shrink-0 text-white/50 transition-colors group-hover:text-white" />
                   {footerData.contact.email}
                 </a>
                 <a
                   href={`tel:${footerData.contact.phone}`}
                   className="group flex items-center gap-2 text-sm text-white/70 transition-colors hover:text-white"
                 >
-                  <Phone size={13} className="transition-colors group-hover:text-white" />
+                  <MdPhone size={16} className="shrink-0 text-white/50 transition-colors group-hover:text-white" />
                   {footerData.contact.phone}
                 </a>
-                <span className="flex items-center gap-2 text-sm text-white/70">
-                  <MapPin size={13} />
+                <span className="flex items-start gap-2 text-sm text-white/70">
+                  <MdLocationOn size={16} className="mt-0.5 shrink-0 text-white/50" />
                   {footerData.contact.address}
                 </span>
               </div>
