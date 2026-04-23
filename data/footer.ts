@@ -33,7 +33,6 @@ export interface FooterData {
   legal: {
     companyName: string;
     copyrightSuffix: string;
-    links: FooterLink[];
   };
 }
 
@@ -93,15 +92,7 @@ export const footerData: FooterData = {
         { label: "Privacy Policy", href: "/privacy" },
       ],
     },
-    {
-      title: "Our Services",
-      links: [
-        { label: "Pay Per Call Leads", href: "/services" },
-        { label: "CPL Leads", href: "/services" },
-        { label: "CPA Leads", href: "/services" },
-        { label: "Custom Solutions", href: "/services" },
-      ],
-    },
+
   ],
   contact: {
     email: "inquiry@leadnationwide.com",
@@ -111,9 +102,5 @@ export const footerData: FooterData = {
   legal: {
     companyName: "Lead Nationwide LLC",
     copyrightSuffix: "All rights reserved.",
-    links: [
-      { label: "Terms", href: "/terms" },
-      { label: "Privacy", href: "/privacy" },
-    ],
   },
 };

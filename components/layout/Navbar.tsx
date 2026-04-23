@@ -134,7 +134,7 @@ export function Navbar() {
               <button
                 id="mobile-menu-toggle"
                 onClick={() => setMobileOpen((v) => !v)}
-                className="min-h-11 min-w-11 rounded-md p-1 text-text-secondary transition-colors hover:text-red-primary focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-red-primary md:hidden"
+                className="min-h-11 min-w-11 rounded-md p-1 text-red-primary transition-colors hover:text-red-primary focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-red-primary md:hidden"
                 aria-label={navbarData.mobileToggleAriaLabel}
                 aria-expanded={mobileOpen}
               >
@@ -182,7 +182,7 @@ export function Navbar() {
                       className={`block rounded-lg border px-4 py-3.5 text-base font-medium transition-colors ${
                         pathname === link.href
                           ? "border-red-primary bg-red-primary text-white"
-                          : "border-transparent text-text-secondary hover:border-red-primary/30 hover:bg-red-primary/5 hover:text-red-primary"
+                          : "border-transparent text-red-primary hover:border-red-primary/30 hover:bg-red-primary/5 hover:text-red-primary"
                       }`}
                     >
                       {link.label}
