@@ -47,8 +47,8 @@ export function Navbar() {
         transition={{ duration: 0.5, ease: "easeOut" }}
         className="fixed left-0 right-0 top-0 z-50"
       >
-        <div className="max-w-[1600px] mx-auto px-6 lg:px-8">
-          <div className="relative flex h-20 items-center justify-between">
+        <div className="max-w-400 mx-auto px-6 lg:px-8">
+          <div className="relative flex h-24 items-center justify-between">
 
             {/* Left — Logo (fades out on scroll) */}
             <div
@@ -72,7 +72,7 @@ export function Navbar() {
                   style={{ width: "auto" }}
                   priority
                 />
-                <span className="text-lg font-bold tracking-tight text-text-primary">
+                <span className="text-xl font-bold tracking-tight text-text-primary">
                   {navbarData.logoPrimary}{" "}
                   <span className="text-red-primary">{navbarData.logoAccent}</span>
                 </span>
@@ -83,15 +83,15 @@ export function Navbar() {
             <nav
               className={`absolute left-1/2 -translate-x-1/2 hidden md:flex items-center gap-1 rounded-full border transition-all duration-500 ease-in-out ${
                 scrolled
-                  ? "border-red-primary bg-white shadow-xl shadow-black/10 backdrop-blur-lg px-3 py-2 scale-110"
-                  : "border-red-primary bg-white/90 backdrop-blur-md px-2 py-1.5 scale-100 shadow-sm"
+                  ? "border-none bg-red-primary shadow-xl shadow-black/10 backdrop-blur-lg px-3 py-2 scale-110"
+                  : "border-red-primary  backdrop-blur-md px-3 py-2 scale-100 shadow-sm"
               }`}
             >
               {navbarData.navLinks.map((link) => (
                 <Link
                   key={link.href}
                   href={link.href}
-                  className={`rounded-full px-4 py-2 text-sm font-medium transition-all duration-200 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-red-primary ${
+                  className={`rounded-full px-4 py-2 text-md font-medium transition-all duration-200 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-primary ${
                     pathname === link.href
                       ? "bg-red-primary text-white shadow-sm"
                       : "text-text-primary hover:bg-red-primary/20 hover:text-red-primary"
@@ -115,7 +115,7 @@ export function Navbar() {
                 <Link
                   href={navbarData.cta.href}
                   tabIndex={scrolled ? -1 : 0}
-                  className="hidden md:inline-flex items-center gap-2 rounded-full bg-red-primary px-5 py-2.5 text-sm font-semibold text-white shadow-md transition-all duration-200 hover:-translate-y-0.5 hover:bg-red-hover hover:shadow-lg focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-red-primary"
+                  className="hidden md:inline-flex items-center gap-2 rounded-full bg-red-primary px-5 py-2.5 text-sm md:text-base font-semibold text-white shadow-md transition-all duration-200 hover:-translate-y-0.5 hover:bg-red-hover hover:shadow-lg focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-red-primary"
                 >
                   <PhoneCall size={14} />
                   {navbarData.cta.label}
