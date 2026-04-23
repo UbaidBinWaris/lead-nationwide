@@ -83,23 +83,31 @@ export function Navbar() {
             <nav
               className={`absolute left-1/2 -translate-x-1/2 hidden md:flex items-center gap-1 rounded-full border transition-all duration-500 ease-in-out ${
                 scrolled
-                  ? "border-none bg-red-primary shadow-xl shadow-black/10 backdrop-blur-lg px-3 py-2 scale-110"
+                  ? "border-red-primary bg-red-primary shadow-xl shadow-black/10 backdrop-blur-lg px-3 py-2 scale-110"
                   : "border-red-primary  backdrop-blur-md px-3 py-2 scale-100 shadow-sm"
               }`}
             >
-              {navbarData.navLinks.map((link) => (
-                <Link
-                  key={link.href}
-                  href={link.href}
-                  className={`rounded-full px-4 py-2 text-md font-medium transition-all duration-200 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-primary ${
-                    pathname === link.href
-                      ? "bg-red-primary text-white shadow-sm"
-                      : "text-text-primary hover:bg-red-primary/20 hover:text-red-primary"
-                  }`}
-                >
-                  {link.label}
-                </Link>
-              ))}
+              {navbarData.navLinks.map((link) => {
+                let stateClass = "text-text-primary hover:bg-red-primary/20 hover:text-red-primary";
+
+                if (pathname === link.href) {
+                  stateClass = scrolled
+                    ? "bg-white text-red-primary shadow-sm"
+                    : "bg-red-primary text-white shadow-sm";
+                } else if (scrolled) {
+                  stateClass = "text-white hover:bg-white/20";
+                }
+
+                return (
+                  <Link
+                    key={link.href}
+                    href={link.href}
+                    className={`rounded-full px-4 py-2 text-md font-medium transition-all duration-200 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-red-primary ${stateClass}`}
+                  >
+                    {link.label}
+                  </Link>
+                );
+              })}
             </nav>
 
             {/* Right — CTA + mobile toggle */}
