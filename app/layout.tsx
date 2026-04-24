@@ -15,6 +15,9 @@ export const metadata: Metadata = {
   title: "Lead Nationwide — Premium Pay Per Call Lead Generation",
   description:
     "High-quality Pay Per Call, CPL, and CPA leads across insurance, finance, home services, and more. Connect with customers who are ready to buy.",
+  verification: {
+    google: "NTpCuTWmwH1iudIczdEeFCxfu37IibC29wzq7C5JyiQ",
+  },
   openGraph: {
     title: "Lead Nationwide — Premium Pay Per Call Lead Generation",
     description:
