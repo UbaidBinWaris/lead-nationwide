@@ -16,13 +16,13 @@ export const metadata: Metadata = {
   description:
     "High-quality Pay Per Call, CPL, and CPA leads across insurance, finance, home services, and more. Connect with customers who are ready to buy.",
   verification: {
-    google: "NTpCuTWmwH1iudIczdEeFCxfu37IibC29wzq7C5JyiQ",
+    google: "QLNoslsx77AWKEiR-pCfAVSuxms0ssw_B0A4lATXZ_Q",
   },
   openGraph: {
     title: "Lead Nationwide — Premium Pay Per Call Lead Generation",
     description:
       "High-quality Pay Per Call, CPL, and CPA leads across diverse industries worldwide.",
-    url: "https://leadnationwide.com",
+    url: "https://lead-nationwide.vercel.app/",
     siteName: "Lead Nationwide",
     type: "website",
   },
