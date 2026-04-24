@@ -79,15 +79,15 @@ export const footerData: FooterData = {
       links: [
         { label: "About Us", href: "/about" },
         { label: "Services", href: "/services" },
-        { label: "Blog", href: "/blog" },
         { label: "Contact Us", href: "/contact" },
       ],
     },
     {
       title: "Help Center",
       links: [
+        { label: "Help Center", href: "/help-center" },
         { label: "Support", href: "/support" },
-        { label: "FAQ", href: "/support#faq" },
+        { label: "FAQ", href: "/faq" },
         { label: "Terms of Service", href: "/terms" },
         { label: "Privacy Policy", href: "/privacy" },
       ],

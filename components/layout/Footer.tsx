@@ -35,24 +35,26 @@ export function Footer() {
 
   return (
     <>
-      <div className="mx-auto w-7xl rounded-4xl mb-10 bg-red-primary px-8 py-10 md:px-12 md:py-12">
-        <div className="flex flex-col gap-6 md:flex-row md:items-center md:justify-between">
-          <div className="max-w-2xl">
-            <p className="text-xs font-semibold uppercase tracking-[0.14em] text-white/60">
-              {footerData.ctaEyebrow}
-            </p>
-            <h2 className="mt-3 text-2xl font-semibold tracking-tight text-white sm:text-3xl">
-              {footerData.ctaTitle}
-            </h2>
-          </div>
-          <div className="shrink-0">
-            <Link
-              href={footerData.ctaButton.href}
-              className="inline-flex min-h-11 items-center gap-2 rounded-full bg-white px-7 py-2.5 text-sm font-semibold text-red-primary transition-all duration-200 hover:bg-white/90 hover:shadow-lg focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-white focus-visible:ring-offset-2 focus-visible:ring-offset-red-primary"
-            >
-              {footerData.ctaButton.label}
-              <MdArrowForward size={16} />
-            </Link>
+      <div className="mx-auto w-full max-w-7xl px-4 sm:px-6 lg:px-8 mb-10 pt-10 sm:pt-0">
+        <div className="rounded-2xl md:rounded-4xl bg-red-primary px-6 py-8 sm:px-8 sm:py-10 md:px-12 md:py-12">
+          <div className="flex flex-col gap-6 md:flex-row md:items-center md:justify-between">
+            <div className="max-w-2xl">
+              <p className="text-xs font-semibold uppercase tracking-[0.14em] text-white/60">
+                {footerData.ctaEyebrow}
+              </p>
+              <h2 className="mt-3 text-2xl font-semibold tracking-tight text-white sm:text-3xl">
+                {footerData.ctaTitle}
+              </h2>
+            </div>
+            <div className="shrink-0">
+              <Link
+                href={footerData.ctaButton.href}
+                className="inline-flex min-h-11 w-full items-center justify-center gap-2 rounded-full bg-white px-7 py-2.5 text-sm font-semibold text-red-primary transition-all duration-200 hover:bg-white/90 hover:shadow-lg focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-white focus-visible:ring-offset-2 focus-visible:ring-offset-red-primary sm:w-auto"
+              >
+                {footerData.ctaButton.label}
+                <MdArrowForward size={16} />
+              </Link>
+            </div>
           </div>
         </div>
       </div>
@@ -157,9 +159,10 @@ export function Footer() {
           </div>
         </div>
 
-        <p className="fixed bottom-0 right-0 z-10 text-sm text-white/60">
-          © {new Date().getFullYear()} {footerData.legal.companyName}. {footerData.legal.copyrightSuffix}
-        </p>
+        
+          <p className="text-right text-sm text-white/50">
+            © {new Date().getFullYear()} {footerData.legal.companyName}. {footerData.legal.copyrightSuffix}
+          </p>
       </footer>
     </>
   );
