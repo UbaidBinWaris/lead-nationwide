@@ -12,11 +12,14 @@ import {
   MdCampaign,
 } from "react-icons/md";
 import { supportPageData } from "@/data/pages/support";
+import { buildPageMetadata } from "@/lib/seo";
 
-export const metadata: Metadata = {
+export const metadata: Metadata = buildPageMetadata({
   title: supportPageData.metadata.title,
   description: supportPageData.metadata.description,
-};
+  path: "/support",
+  keywords: ["support center", "lead generation support", "campaign onboarding"],
+});
 
 const stepIconMap = {
   email: MdEmail,

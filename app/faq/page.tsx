@@ -3,11 +3,14 @@ import Link from "next/link";
 import { MdArrowForward } from "react-icons/md";
 import { FaqAccordion } from "@/components/ui/FaqAccordion";
 import { faqPageData } from "@/data/pages/faq";
+import { buildPageMetadata } from "@/lib/seo";
 
-export const metadata: Metadata = {
+export const metadata: Metadata = buildPageMetadata({
   title: faqPageData.metadata.title,
   description: faqPageData.metadata.description,
-};
+  path: "/faq",
+  keywords: ["frequently asked questions", "pay per call faq", "lead quality faq"],
+});
 
 export default function FaqPage() {
   return (

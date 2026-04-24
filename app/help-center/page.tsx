@@ -13,11 +13,14 @@ import {
   MdShield,
 } from "react-icons/md";
 import { helpCenterPageData } from "@/data/pages/helpCenter";
+import { buildPageMetadata } from "@/lib/seo";
 
-export const metadata: Metadata = {
+export const metadata: Metadata = buildPageMetadata({
   title: helpCenterPageData.metadata.title,
   description: helpCenterPageData.metadata.description,
-};
+  path: "/help-center",
+  keywords: ["help center", "support", "lead generation faq"],
+});
 
 const resourceIconMap = {
   support: MdHeadsetMic,
