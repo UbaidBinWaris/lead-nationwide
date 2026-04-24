@@ -7,6 +7,7 @@ import { servicesPage } from "@/data/pages/services";
 export { faqPageData } from "@/data/pages/faq";
 export { helpCenterPageData } from "@/data/pages/helpCenter";
 export { privacyPageData } from "@/data/pages/privacy";
+export { contactDetailedPageData } from "@/data/pages/contactDetailed";
 export { supportPageData } from "@/data/pages/support";
 export { termsPageData } from "@/data/pages/terms";
 

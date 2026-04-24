@@ -1,14 +1,12 @@
 import type { Metadata } from "next";
-import { CmsPageView } from "@/components/sections/CmsPageView";
-import { getPageBySlug } from "@/lib/cms";
-
-const pageContent = getPageBySlug("services");
+import { ServicesPageView } from "@/components/sections/ServicesPageView";
+import { servicesDetailedPageData } from "@/data/pages/servicesDetailed";
 
 export const metadata: Metadata = {
-  title: pageContent.title,
-  description: pageContent.description,
+  title: servicesDetailedPageData.metadata.title,
+  description: servicesDetailedPageData.metadata.description,
 };
 
 export default function ServicesPage() {
-  return <CmsPageView page={pageContent} />;
+  return <ServicesPageView page={servicesDetailedPageData} />;
 }
