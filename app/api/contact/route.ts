@@ -59,7 +59,7 @@ export async function POST(req: Request) {
     const result = contactSchema.safeParse(body);
     if (!result.success) {
       // Format Zod errors
-      const errorMessages = result.error.errors.map(err => err.message).join(", ");
+      const errorMessages = result.error.issues.map(err => err.message).join(", ");
       return NextResponse.json(
         { error: errorMessages },
         { status: 400 }

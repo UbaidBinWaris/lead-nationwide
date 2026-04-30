@@ -1,5 +1,8 @@
+"use client";
+
 import Link from "next/link";
 import Image from "next/image";
+import { usePathname } from "next/navigation";
 import { FaYoutube, FaLinkedinIn, FaFacebookF } from "react-icons/fa";
 import { MdEmail, MdPhone, MdLocationOn, MdArrowForward } from "react-icons/md";
 import type { IconType } from "react-icons";
@@ -18,6 +21,10 @@ const socialHoverMap: Record<FooterSocialIcon, string> = {
 };
 
 export function Footer() {
+  const pathname = usePathname();
+
+  if (pathname.startsWith('/l8I32auyIM')) return null;
+
   const organizationSchema = {
     "@context": "https://schema.org",
     "@type": "Organization",
