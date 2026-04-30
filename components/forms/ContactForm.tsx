@@ -11,7 +11,6 @@ export function ContactForm() {
     phone: "",
     company: "",
     message: "",
-    _gotcha: "",
   });
 
   const [status, setStatus] = useState<"idle" | "submitting" | "success" | "error">("idle");
@@ -42,7 +41,7 @@ export function ContactForm() {
       }
 
       setStatus("success");
-      setFormData({ name: "", email: "", phone: "", company: "", message: "", _gotcha: "" });
+      setFormData({ name: "", email: "", phone: "", company: "", message: "" });
     } catch (error: any) {
       console.error("Form submission error:", error);
       setStatus("error");
@@ -83,16 +82,6 @@ export function ContactForm() {
         </motion.div>
       ) : (
         <form onSubmit={handleSubmit} className="mt-8 grid grid-cols-1 gap-x-6 gap-y-6 sm:grid-cols-2">
-          <input
-            type="text"
-            name="_gotcha"
-            tabIndex={-1}
-            autoComplete="off"
-            className="absolute left-[-9999px]"
-            aria-hidden="true"
-            value={formData._gotcha}
-            onChange={handleChange}
-          />
           <div className="sm:col-span-1">
             <label htmlFor="name" className="block text-sm font-medium text-text-primary">
               Full Name <span className="text-red-primary">*</span>

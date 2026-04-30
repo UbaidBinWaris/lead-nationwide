@@ -2,13 +2,8 @@ import { NextResponse } from 'next/server';
 import { prisma } from '@/lib/prisma';
 import { z } from 'zod';
 import sanitizeHtml from 'sanitize-html';
-import { LRUCache } from 'lru-cache';
-
-// Simple in-memory rate limiter (max 5 requests per IP per 15 minutes)
-const rateLimit = new LRUCache<string, number>({
-  max: 500, // Maximum number of IPs to track
-  ttl: 15 * 60 * 1000, // 15 minutes
-});
+import { redis } from '@/lib/redis';
+import { UAParser } from 'ua-parser-js';
 
 // Zod schema for input validation
 const contactSchema = z.object({
@@ -17,7 +12,6 @@ const contactSchema = z.object({
   phone: z.string().max(50, "Phone number is too long").optional().nullable(),
   company: z.string().max(100, "Company name is too long").optional().nullable(),
   message: z.string().min(1, "Message is required").max(2000, "Message must be less than 2000 characters"),
-  _gotcha: z.string().optional(), // Honeypot field
 });
 
 // Helper function to strip HTML tags
@@ -31,31 +25,27 @@ const sanitize = (text?: string | null) => {
 
 export async function POST(req: Request) {
   try {
-    // 1. Rate Limiting Check
+    // 1. Rate Limiting Check using Redis
     const ip = req.headers.get("x-forwarded-for") ?? '127.0.0.1';
-    const requestCount = rateLimit.get(ip) || 0;
+    const rateLimitKey = `rate-limit:contact:${ip}`;
+    
+    const requestCount = await redis.incr(rateLimitKey);
+    if (requestCount === 1) {
+      // Set expiration to 15 minutes on the first request
+      await redis.expire(rateLimitKey, 15 * 60);
+    }
 
-    if (requestCount >= 5) {
+    if (requestCount > 5) {
       return NextResponse.json(
         { error: 'Too many requests, please try again later.' },
         { status: 429 }
       );
     }
-    rateLimit.set(ip, requestCount + 1);
 
     // 2. Parse payload
     const body = await req.json();
 
-    // 3. Honeypot check (Bot Prevention)
-    if (body._gotcha && body._gotcha.trim() !== '') {
-      // Silently accept it to fool the bot, but don't save to DB
-      return NextResponse.json(
-        { message: 'Your message has been sent successfully.' },
-        { status: 201 }
-      );
-    }
-
-    // 4. Validate with Zod
+    // 3. Validate with Zod
     const result = contactSchema.safeParse(body);
     if (!result.success) {
       // Format Zod errors
@@ -75,7 +65,16 @@ export async function POST(req: Request) {
     const sanitizedPhone = sanitize(phone) || null;
     const sanitizedCompany = sanitize(company) || null;
 
-    // 6. Save to Database using Prisma (SQLi safe)
+    // 6. Capture enhanced tracking details
+    const userAgentStr = req.headers.get("user-agent") || "";
+    const parser = new UAParser(userAgentStr);
+    const browser = `${parser.getBrowser().name || 'Unknown'} ${parser.getBrowser().version || ''}`.trim();
+    const os = `${parser.getOS().name || 'Unknown'} ${parser.getOS().version || ''}`.trim();
+    const deviceType = parser.getDevice().type || 'Desktop';
+    const deviceModel = parser.getDevice().model ? ` (${parser.getDevice().vendor} ${parser.getDevice().model})` : '';
+    const device = `${deviceType}${deviceModel}`;
+
+    // 7. Save to Database using Prisma (SQLi safe)
     const newContact = await prisma.contactMessage.create({
       data: {
         name: sanitizedName,
@@ -83,8 +82,18 @@ export async function POST(req: Request) {
         phone: sanitizedPhone,
         company: sanitizedCompany,
         message: sanitizedMessage,
+        ip: ip,
+        browser: browser,
+        os: os,
+        device: device,
       },
     });
+
+    // Clear all admin message paginated caches
+    const cacheKeys = await redis.keys('admin:messages:cache:*');
+    if (cacheKeys.length > 0) {
+      await redis.del(...cacheKeys);
+    }
 
     return NextResponse.json(
       { message: 'Your message has been sent successfully.', contact: newContact },

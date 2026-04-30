@@ -14,5 +14,9 @@ model ContactMessage {
   phone     String?
   company   String?
   message   String
+  ip        String?
+  browser   String?
+  os        String?
+  device    String?
   createdAt DateTime @default(now())
 }
