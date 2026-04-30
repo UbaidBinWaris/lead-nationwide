@@ -13,6 +13,7 @@ import {
 } from "react-icons/md";
 import { fadeUp, heroStagger, staggerContainer } from "@/lib/motion";
 import type { ContactDetailedPageData } from "@/data/pages/contactDetailed";
+import { ContactForm } from "@/components/forms/ContactForm";
 
 interface ContactPageViewProps {
   page: ContactDetailedPageData;
@@ -80,15 +81,16 @@ export function ContactPageView({ page }: Readonly<ContactPageViewProps>) {
         </motion.div>
       </section>
 
-      <section className="mx-auto max-w-7xl px-6 py-16 lg:px-8 lg:py-20">
-        <motion.div
-          variants={staggerContainer}
-          initial="hidden"
-          whileInView="visible"
-          viewport={{ once: true, amount: 0.2 }}
-          className="grid gap-6 md:grid-cols-3"
-        >
-          {page.channels.map((channel) => {
+      <section className="mx-auto max-w-7xl px-6 py-16 lg:px-8 lg:py-24">
+        <div className="grid gap-12 lg:grid-cols-3 lg:gap-8">
+          <motion.div
+            variants={staggerContainer}
+            initial="hidden"
+            whileInView="visible"
+            viewport={{ once: true, amount: 0.2 }}
+            className="flex flex-col gap-6"
+          >
+            {page.channels.map((channel) => {
             const Icon = channelIconMap[channel.type];
 
             const content = (
@@ -127,7 +129,9 @@ export function ContactPageView({ page }: Readonly<ContactPageViewProps>) {
               </motion.article>
             );
           })}
-        </motion.div>
+          </motion.div>
+          <ContactForm />
+        </div>
       </section>
 
       <section className="border-y border-white/10 bg-navy-surface">
