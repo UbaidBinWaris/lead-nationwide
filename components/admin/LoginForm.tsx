@@ -8,40 +8,40 @@ export function LoginForm() {
   const [errorMessage, dispatch, isPending] = useActionState(authenticate, undefined);
 
   return (
-    <form action={dispatch} className="w-full max-w-sm rounded-3xl bg-white p-8 shadow-2xl shadow-navy-deep/10 border border-border-light">
+    <form action={dispatch} className="w-full max-w-sm rounded-3xl bg-slate-900 p-8 shadow-2xl border border-slate-800">
       <div className="mb-8 flex flex-col items-center">
-        <div className="flex h-16 w-16 items-center justify-center rounded-full bg-blue-50 text-blue-primary">
+        <div className="flex h-16 w-16 items-center justify-center rounded-full bg-blue-500/10 text-blue-400">
           <MdLockOutline size={28} />
         </div>
-        <h2 className="mt-4 text-2xl font-bold tracking-tight text-text-primary">Admin Portal</h2>
-        <p className="mt-1 text-sm text-text-secondary">Sign in to manage submissions.</p>
+        <h2 className="mt-4 text-2xl font-bold tracking-tight text-white">Admin Portal</h2>
+        <p className="mt-1 text-sm text-slate-400">Sign in to manage submissions.</p>
       </div>
       
       <div className="space-y-5">
         <div>
-          <label className="mb-1.5 block text-sm font-medium text-text-primary">Username</label>
+          <label className="mb-1.5 block text-sm font-medium text-slate-300">Username</label>
           <input 
             type="text" 
             name="username" 
             required 
             autoComplete="username"
-            className="w-full rounded-xl border border-border-light bg-bg-secondary px-4 py-2.5 text-sm text-text-primary outline-none transition-all focus:border-blue-primary focus:ring-1 focus:ring-blue-primary" 
+            className="w-full rounded-xl border border-slate-700 bg-slate-800 px-4 py-2.5 text-sm text-slate-200 outline-none transition-all focus:border-blue-500 focus:ring-1 focus:ring-blue-500 placeholder-slate-500" 
           />
         </div>
         <div>
-          <label className="mb-1.5 block text-sm font-medium text-text-primary">Password</label>
+          <label className="mb-1.5 block text-sm font-medium text-slate-300">Password</label>
           <input 
             type="password" 
             name="password" 
             required 
             autoComplete="current-password"
-            className="w-full rounded-xl border border-border-light bg-bg-secondary px-4 py-2.5 text-sm text-text-primary outline-none transition-all focus:border-blue-primary focus:ring-1 focus:ring-blue-primary" 
+            className="w-full rounded-xl border border-slate-700 bg-slate-800 px-4 py-2.5 text-sm text-slate-200 outline-none transition-all focus:border-blue-500 focus:ring-1 focus:ring-blue-500 placeholder-slate-500" 
           />
         </div>
       </div>
 
       {errorMessage && (
-        <div className="mt-4 rounded-lg bg-red-50 p-3 text-sm text-red-600 border border-red-100">
+        <div className="mt-4 rounded-lg bg-red-500/10 p-3 text-sm text-red-400 border border-red-500/20">
           {errorMessage}
         </div>
       )}

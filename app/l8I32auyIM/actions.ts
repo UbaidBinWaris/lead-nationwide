@@ -17,7 +17,7 @@ export async function deleteMessage(id: string) {
     }
     
     // Revalidate the admin page so the UI updates immediately
-    const adminPath = process.env.ADMIN_PAGE || "/admin";
+    const adminPath = process.env.ADMIN_PAGE || "/l8I32auyIM";
     revalidatePath(adminPath);
     
     return { success: true };
